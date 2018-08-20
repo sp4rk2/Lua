@@ -16,8 +16,11 @@ end
 function frame()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(frameColour, false)
+	--Top line
 	gpu.fill(1, 1, width, 1, " ")
-	gpu.fill(1, 1, 1, height, " ")
+	gpu.fill(1, 1, 2, height, " ")
+	gpu.fill(1, height, width, 1, " ")
+	gpu.fill(width - 1, 1, 2, height, " ")
 	gpu.setBackground(oldColour, false)
 end
 
