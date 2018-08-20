@@ -4,7 +4,7 @@ local  gpu = component.gpu
 
 local width, height = gpu.getResolution()
 
-local frameColour = 0x333333
+local frameColour = 0xFFFFFF
 
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
@@ -16,11 +16,13 @@ end
 function frame()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(frameColour, false)
-	--Top line
+	--Outer frame
 	gpu.fill(1, 1, width, 1, " ")
 	gpu.fill(1, 1, 2, height, " ")
 	gpu.fill(1, height, width, 1, " ")
 	gpu.fill(width - 1, 1, 2, height, " ")
+	--Divider
+	gpu.fill((width / 4) * 3, 1, 1, height, " ")
 	gpu.setBackground(oldColour, false)
 end
 
