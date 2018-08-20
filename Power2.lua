@@ -13,16 +13,16 @@ function clearScreen()
 	gpu.setBackground(oldColour, false)
 end
 
--- function frame()
--- 	local oldColour = gpu.getBackground(false)
--- 	gpu.setBackground(frameColour, false)
--- 	gpu.fill(1, 1, w, 1, " ")
--- 	gpu.setBackground(oldColour, false)
--- end
+function frame()
+	local oldColour = gpu.getBackground(false)
+	gpu.setBackground(frameColour, false)
+	gpu.fill(1, 1, width, 1, " ")
+	gpu.setBackground(oldColour, false)
+end
 
 function main()
 	clearScreen()
-	-- frame()
+	frame()
 end
 
 while true do
