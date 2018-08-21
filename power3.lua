@@ -54,6 +54,7 @@ function clearScreen()
 end
 
 function setFrame()
+	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(frameColour, false)
 	--Outer frame
 	gpu.fill(1, 1, width, 1, " ")
@@ -62,6 +63,7 @@ function setFrame()
 	gpu.fill(width - 1, 1, 2, height, " ")
 	--Divider
 	gpu.fill((width / 4) * 3, 1, 1, height, " ")
+	gpu.setBackground(oldColour, false)
 end
 
 function round(num, numDecimalPlaces)
@@ -89,13 +91,16 @@ end
 
 
 function setHeader()
+	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(headerColour, false)
 	for index=1, tableLength(header) do
 		gpu.set(headerPaddingLeft, index + 3, centerText(header[index], headerSpace))
 	end
+	gpu.setForeground(oldColour, false)
 end
 
 function setStatistics()
+	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(titleColour, false)
 
 	gpu.set(statisticsPaddingLeft - 1, statisticsPaddingTop, centerText("Statistics", titleSpace))
@@ -118,9 +123,10 @@ function setStatistics()
 	gpu.set(width - string.len(tostring(lowestRFTime)) - 3, statisticsPaddingTop + 6, tostring(lowestRFTime))
 	gpu.set(width - string.len(tostring(highestRF) .. "RF") - 3, statisticsPaddingTop + 8, tostring(highestRF) .. "RF")
 	gpu.set(width - string.len(tostring(highestRFTime)) - 3, statisticsPaddingTop + 9, tostring(highestRFTime))
+	gpu.setForeground(oldColour, false)
 end
 
-function setValues()
+function calculateValues()
 	headerSpace = (width / 4) - 3
 	headerPaddingLeft = ((width / 4) * 3) + 1
 
@@ -174,7 +180,7 @@ function graph()
 end
 
 function main()
-	setValues()
+	calculateValues()
 	while true do
 		updateRFValues()
 		clearScreen()
