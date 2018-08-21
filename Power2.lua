@@ -82,7 +82,7 @@ function statistics()
 	gpu.setForeground(titleColour, false)
 
 	local paddingLeft = ((width / 4) * 3) + 2
-	local paddingTop = 8 + tableLength(title)
+	local paddingTop = 8 + tableLength(header)
 	local titleSpace = (width / 4) - 3
 
 	gpu.set(paddingLeft - 1, paddingTop, centerText("Statistics", titleSpace))
@@ -104,7 +104,7 @@ function statistics()
 	gpu.set(paddingLeft + 16, paddingTop + 5, lowestRF)
 	gpu.set(paddingLeft + 16, paddingTop + 6, lowestRFTime)
 	gpu.set(paddingLeft + 16, paddingTop + 8, highestRF)
-	gpu.set(paddingLeft = 16, paddingTop + 9, highestRFTime)
+	gpu.set(paddingLeft + 16, paddingTop + 9, highestRFTime)
 
 	gpu.setForeground(oldColour, false)
 
