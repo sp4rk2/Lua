@@ -33,7 +33,7 @@ function frame()
 end
 
 function centerText(text, space)
-	return math.ceil(((space - string.len(text)) / 2)) * " " .. text
+	return " " * math.ceil((space - string.len(text)) / 2) .. text
 end
 
 function header()
@@ -42,7 +42,7 @@ function header()
 
 	local headerSpace = ((width / 4) * 3) - 3
 
-	gpu.set(3, ((width / 4) * 3) + 1, centerText(title[0], headerSpace))
+	gpu.set(3, ((width / 4) * 3) + 1, centerText(title[1], headerSpace))
 
 	gpu.setForeground(oldColour, false)
 
