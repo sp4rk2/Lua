@@ -133,9 +133,10 @@ function updateRFValues()
 
 	if available >= highestRF then
 		highestRF = component.energy_device.getEnergyStored() * cellCount
+	end
 	if available <= lowestRF then
 		lowestRF = component.energy_device.getEnergyStored() * cellCount
-
+	end
 	percent = round((available / max) * height - 20, 0)
 
 	table.insert(valuesRF, 1, percent)
@@ -174,11 +175,11 @@ end
 function main()
 	setRFValues()
 	while true do
+		updateRFValues()
 		clearScreen()
 		setFrame()
 		setHeader()
 		setStatistics()
-		updateRFValues()
 		graph()
 		os.sleep(updateTime)
 	end
