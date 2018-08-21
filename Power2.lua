@@ -120,12 +120,17 @@ function setRFValues()
 end
 
 function graph()
+	local oldColour = gpu.getBackground(false)
+	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = 7
 	local paddingTop = (height / 4) * 3 
 	for index = 1, tableLength(valuesRF) do
 		gpu.fill(paddingLeft, paddingTop, 1, valuesRF[index], " ")
 		paddingLeft = paddingLeft + 1
 	end
+
+	gpu.setBackground(oldColour, false)
+
 
 end
 
