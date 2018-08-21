@@ -121,7 +121,7 @@ end
 
 function updateRFValues()
 	table.insert(valuesRF, 1, math.random(30))
-	table.remove(numbers)
+	table.remove(valuesRF)
 end
 
 -- function updateStatistics()
