@@ -6,6 +6,12 @@ local width, height = gpu.getResolution()
 
 local frameColour = 0xFFFFFF
 
+local barColour1 = 0x06989A
+local barColour2 = 0x34E2E2
+
+local title = {"Testing", "(MPMv0.1)"}
+local titleColour = 0xFFFFFF
+
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0x000000, false)
@@ -26,9 +32,27 @@ function frame()
 	gpu.setBackground(oldColour, false)
 end
 
+function centerText(text, space)
+	return math.ceil(((space - string.len(text)) / 2)) * " " .. text
+end
+
+function header()
+	local oldColour = gpu.getForeground(false)
+	gpu.setForeground(titleColour, false)
+
+	local headerSpace = ((width / 4) * 3) - 3
+
+	gpu.set(3, ((width / 4) * 3) + 1, centerText(title[0], headerSpace))
+
+	gpu.setForeground(oldColour, false)
+
+end
+
+
 function main()
 	clearScreen()
 	frame()
+	header()
 end
 
 while true do
