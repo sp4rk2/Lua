@@ -131,8 +131,8 @@ end
 function graph()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0xFFFFFF, false)
-	local paddingLeft = 7
-	local paddingTop = (height / 4) * 3
+	local paddingLeft = (width / 4 * 3) - 1
+	local paddingTop = height - 1
 	local colourSwitch = true
 	for index = 1, tableLength(valuesRF) do
 		if colourSwitch == true then
@@ -143,9 +143,9 @@ function graph()
 			colourSwitch = true
 		end
 
-		gpu.fill(paddingLeft, paddingTop - valuesRF[index], 1, valuesRF[index], " ")
+		gpu.fill(paddingLeft, paddingTop - valuesRF[tableLength(valuesRF) - index + 1], 1, valuesRF[tableLength(valuesRF) - index + 1], " ")
 
-		paddingLeft = paddingLeft + 1
+		paddingLeft = paddingLeft - 1
 
 	end
 
