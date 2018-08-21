@@ -9,7 +9,7 @@ local frameColour = 0xFFFFFF
 local barColour1 = 0x06989A
 local barColour2 = 0x34E2E2
 
-local title = {"Testing", "(MPMv0.1)"}
+local title = {"Test", "(MPMv0.1)"}
 local titleColour = 0xFFFFFF
 
 function clearScreen()
@@ -42,14 +42,16 @@ function centerText(text, space)
 end
 
 function header()
-	local oldColour = gpu.getForeground(false)
-	gpu.setForeground(titleColour, false)
+	-- local oldColour = gpu.getForeground(false)
+	-- gpu.setForeground(titleColour, false)
 
 	local headerSpace = ((width / 4) * 3) - 3
 
-	gpu.set(((width / 4) * 3) + 1, 3, centerText(title[1], headerSpace))
+	-- gpu.set(((width / 4) * 3) + 1, 3, centerText(title[1], headerSpace))
 
-	gpu.setForeground(oldColour, false)
+	gpu.set(10, 10, "testing")
+
+	-- gpu.setForeground(oldColour, false)
 
 end
 
