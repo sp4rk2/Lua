@@ -35,10 +35,18 @@ end
 function centerText(text, space)
 	local padding = math.ceil((space - string.len(text)) / 2)
 	local output = ""
-	for index=1, padding do
+	for _ = 1, padding do
 		output = output .. " "
 	end
 	return output .. text
+end
+
+function tableLength(tableInput)
+  local output = 0
+  for _ in pairs(tableInput) do 
+  	output = output + 1 
+  end
+  return output
 end
 
 function header()
@@ -46,7 +54,7 @@ function header()
 	gpu.setForeground(titleColour, false)
 
 	local headerSpace = (width / 4) - 3
-	for index=1, table.getn(title) do
+	for index=1, tableLength(title) do
 		gpu.set(((width / 4) * 3) + 1, index + 3, centerText(title[index], headerSpace))
 	end
 
