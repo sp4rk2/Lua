@@ -165,7 +165,7 @@ function graph()
 	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = (width / 4 * 3) - 2
 
-	for index = 3, graphLength do
+	for index = 1, graphLength do
 		-- if colourSwitch == true then
 		gpu.setBackground(barColour1, false)
 		-- 	colourSwitch = false
@@ -174,7 +174,7 @@ function graph()
 		-- 	colourSwitch = true
 		-- end
 
-		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[graphLength - index], 1, valuesRF[graphLength - index], " ")
+		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[graphLength - index + 1], 1, valuesRF[graphLength - index + 1], " ")
 
 		paddingLeft = paddingLeft - 1
 
