@@ -34,19 +34,17 @@ local highestRFTime = 0
 
 local colourSwitch = true
 
+local headerSpace = 0
+local headerPaddingLeft = 0
 
+local statisticsPaddingLeft = 0
+local statisticsPaddingTop = 0
+local titleSpace = 0
 
-local headerSpace = (width / 4) - 3
-local headerPaddingLeft = ((width / 4) * 3) + 1
+local graphLength = 0
 
-local statisticsPaddingLeft = ((width / 4) * 3) + 2
-local statisticsPaddingTop = 8 + tableLength(header)
-local titleSpace = (width / 4) - 3
-
-local graphLength = (width / 4 * 3) - 11
-
-local graphPaddingLeft = (width / 4 * 3) - 2
-local graphPaddingTop = height - 1
+local graphPaddingLeft = 0
+local graphPaddingTop = 0
 
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
@@ -122,7 +120,18 @@ function setStatistics()
 	gpu.set(width - string.len(tostring(highestRFTime)) - 3, statisticsPaddingTop + 9, tostring(highestRFTime))
 end
 
-function setRFValues()
+function setValues()
+	headerSpace = (width / 4) - 3
+	headerPaddingLeft = ((width / 4) * 3) + 1
+
+	statisticsPaddingLeft = ((width / 4) * 3) + 2
+	statisticsPaddingTop = 8 + tableLength(header)
+	titleSpace = (width / 4) - 3
+
+	graphLength = (width / 4 * 3) - 11
+
+	graphPaddingLeft = (width / 4 * 3) - 2
+	graphPaddingTop = height - 1
 	for index = 1, graphLength do
 		valuesRF[index] = 1
 	end
@@ -165,7 +174,7 @@ function graph()
 end
 
 function main()
-	setRFValues()
+	setValues()
 	while true do
 		updateRFValues()
 		clearScreen()
