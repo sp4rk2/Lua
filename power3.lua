@@ -41,6 +41,10 @@ local statisticsPaddingLeft = 0
 local statisticsPaddingTop = 0
 local titleSpace = 0
 
+local graphPaddingTop = 0
+
+local valuesRFLength = 0
+
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0x000000, false)
@@ -130,6 +134,8 @@ function calculateValues()
 	graphLength = (width / 4 * 3) - 11
 	statisticsPaddingLeft = ((width / 4) * 3) + 2
 	titleSpace = (width / 4) - 3
+	graphPaddingTop = height - 1
+	valuesRFLength = tableLength(valuesRF)
 	for index = 1, graphLength do
 		valuesRF[index] = 1
 	end
@@ -156,9 +162,10 @@ end
 
 function graph()
 	local oldColour = gpu.getBackground(false)
+
 	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = (width / 4 * 3) - 2
-	local paddingTop = height - 1
+
 	for index = 1, tableLength(valuesRF) do
 		if colourSwitch == true then
 			gpu.setBackground(barColour1, false)
@@ -168,7 +175,7 @@ function graph()
 			colourSwitch = true
 		end
 
-		gpu.fill(paddingLeft, paddingTop - valuesRF[tableLength(valuesRF) - index + 1], 1, valuesRF[tableLength(valuesRF) - index + 1], " ")
+		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[valuesRFLength - index + 1], 1, valuesRF[valuesRFLength - index + 1], " ")
 
 		paddingLeft = paddingLeft - 1
 
