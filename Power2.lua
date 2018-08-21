@@ -21,6 +21,8 @@ local titleColour = 0xFFFFFF
 local statisticKeyColour = 0x06989A
 local statisticValueColour = 0x34E2E2
 
+local valuesRF = {}
+
 local cellCount = 0
 local tslu = 0
 local lowestRF = 0
@@ -99,7 +101,7 @@ function setStatistics()
 
 	gpu.setForeground(statisticValueColour, false)
 	gpu.set(width - string.len(tostring(cellCount)) - 3, paddingTop, tostring(cellCount))
-	gpu.set(width - string.len(tostring(tlsu)) - 3, paddingTop + 1, tostring(tslu))
+	gpu.set(width - string.len(tostring(tslu)) - 3, paddingTop + 1, tostring(tslu))
 	gpu.set(width - string.len(tostring(0)) - 3, paddingTop + 3, tostring(0))
 	gpu.set(width - string.len(tostring(lowestRF)) - 3, paddingTop + 5, tostring(lowestRF))
 	gpu.set(width - string.len(tostring(lowestRFTime)) - 3, paddingTop + 6, tostring(lowestRFTime))
@@ -110,12 +112,31 @@ function setStatistics()
 
 end
 
+function setRFValues()
+	local graphLength = (width / 4 * 3) - 8
+	for index = 1, graphLength do
+		valuesRF[index] = 1
+	end
+end
+
+function graph()
+	local paddingLeft = 7
+	local paddingTop = (height / 4) * 3 
+	for index = 1, tableLength(valuesRF) do
+		gpu.fill(paddingLeft, paddingTop, 1, valuesRF[index], " ")
+		paddingLeft = paddingLeft + 1
+	end
+
+end
+
 function main()
 	while true do
 		clearScreen()
+		setRFValues()
 		setFrame()
 		setHeader()
 		setStatistics()
+		graph()
 		os.sleep(0.25)
 	end
 end
