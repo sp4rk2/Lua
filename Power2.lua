@@ -35,7 +35,7 @@ function clearScreen()
 	gpu.setBackground(oldColour, false)
 end
 
-function frame()
+function setFrame()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(frameColour, false)
 	--Outer frame
@@ -65,7 +65,7 @@ function tableLength(tableInput)
   return output
 end
 
-function header()
+function setHeader()
 	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(headerColour, false)
 
@@ -77,7 +77,7 @@ function header()
 	gpu.setForeground(oldColour, false)
 end
 
-function statistics()
+function setStatistics()
 	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(titleColour, false)
 
@@ -113,8 +113,9 @@ end
 function main()
 	while true do
 		clearScreen()
-		frame()
-		header()
+		setFrame()
+		setHeader()
+		setStatistics()
 		os.sleep(0.25)
 	end
 end
