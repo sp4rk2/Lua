@@ -9,8 +9,24 @@ local frameColour = 0xFFFFFF
 local barColour1 = 0x06989A
 local barColour2 = 0x34E2E2
 
-local title = {"Mainframe Power Monitor", "(MPMv0.1)"}
+local header = {
+	"Mainframe Power Monitor", 
+	"(MPMv0.1)"
+}
+
+local headerColour = 0xFFFFFF
+
 local titleColour = 0xFFFFFF
+
+local statisticKeyColour = 0x06989A
+local statisticValueColour = 0x34E2E2
+
+local cellCount = 0
+local tslu = 0
+local lowestRF = 0
+local lowestRFTime = 0
+local highestRF = 0
+local highestRFTime = 0
 
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
@@ -51,25 +67,57 @@ end
 
 function header()
 	local oldColour = gpu.getForeground(false)
-	gpu.setForeground(titleColour, false)
+	gpu.setForeground(headerColour, false)
 
 	local headerSpace = (width / 4) - 3
-	for index=1, tableLength(title) do
-		gpu.set(((width / 4) * 3) + 1, index + 3, centerText(title[index], headerSpace))
+	local paddingLeft = ((width / 4) * 3) + 1
+	for index=1, tableLength(header) do
+		gpu.set(paddingLeft, index + 3, centerText(header[index], headerSpace))
 	end
+	gpu.setForeground(oldColour, false)
+end
+
+function statistics()
+	local oldColour = gpu.getForeground(false)
+	gpu.setForeground(titleColour, false)
+
+	local paddingLeft = ((width / 4) * 3) + 2
+	local paddingTop = 8 + tableLength(title)
+	local titleSpace = (width / 4) - 3
+
+	gpu.set(paddingLeft - 1, paddingTop, centerText("Statistics", titleSpace))
+	paddingTop = paddingTop + 2
+
+	gpu.setForeground(statisticKeyColour, false)
+	gpu.set(paddingLeft, paddingTop, "Cell Count: ")
+	gpu.set(paddingLeft, paddingTop + 1, "TSLU: ")
+	gpu.set(paddingLeft, paddingTop + 3, "Available RF: ")
+	gpu.set(paddingLeft, paddingTop + 5, "Lowest RF: ")
+	gpu.set(paddingLeft, paddingTop + 6, "Lowest RF Time: ")
+	gpu.set(paddingLeft, paddingTop + 8, "Highest RF: ")
+	gpu.set(paddingLeft, paddingTop + 9, "Highest RF: ")
+
+	gpu.setForeground(statisticValueColour, false)
+	gpu.set(paddingLeft + 16, paddingTop, cellCount)
+	gpu.set(paddingLeft + 16, paddingTop + 1, TSLU)
+	gpu.set(paddingLeft + 16, paddingTop + 3, 0)
+	gpu.set(paddingLeft + 16, paddingTop + 5, lowestRF)
+	gpu.set(paddingLeft + 16, paddingTop + 6, lowestRFTime)
+	gpu.set(paddingLeft + 16, paddingTop + 8, highestRF)
+	gpu.set(paddingLeft = 16, paddingTop + 9, highestRFTime)
 
 	gpu.setForeground(oldColour, false)
 
 end
 
-
 function main()
-	clearScreen()
-	frame()
-	header()
+	while true do
+		clearScreen()
+		frame()
+		header()
+		os.sleep(0.25)
+	end
 end
 
-while true do
-	main()
-	os.sleep(0.25)
-end
+
+main()
