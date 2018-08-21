@@ -33,7 +33,12 @@ function frame()
 end
 
 function centerText(text, space)
-	return " " * math.ceil((space - string.len(text)) / 2) .. text
+	local padding = math.ceil((space - string.len(text)) / 2)
+	local output = ""
+	for index=1, padding do
+		output = output .. " "
+	end
+	return output .. text
 end
 
 function header()
