@@ -97,6 +97,8 @@ function setStatistics()
 	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(titleColour, false)
 
+	statisticsPaddingTop = 8 + tableLength(header)
+
 	gpu.set(statisticsPaddingLeft - 1, statisticsPaddingTop, centerText("Statistics", titleSpace))
 	statisticsPaddingTop = statisticsPaddingTop + 2
 
@@ -127,7 +129,6 @@ function calculateValues()
 	headerPaddingLeft = ((width / 4) * 3) + 1
 	graphLength = (width / 4 * 3) - 11
 	statisticsPaddingLeft = ((width / 4) * 3) + 2
-	statisticsPaddingTop = 8 + tableLength(headerSpace)
 	titleSpace = (width / 4) - 3
 	for index = 1, graphLength do
 		valuesRF[index] = 1
