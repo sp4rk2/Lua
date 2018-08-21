@@ -165,7 +165,7 @@ function graph()
 	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = (width / 4 * 3) - 2
 
-	for index = 3, graphLength + 3 do
+	for index = 3, graphLength do
 		-- if colourSwitch == true then
 		gpu.setBackground(barColour1, false)
 		-- 	colourSwitch = false
