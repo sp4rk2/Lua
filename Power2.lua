@@ -161,8 +161,9 @@ function main()
 		setFrame()
 		setHeader()
 		setStatistics()
+		updateRFValues()
 		graph()
-		os.sleep(0.25)
+		os.sleep(3)
 	end
 end
 
