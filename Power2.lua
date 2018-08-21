@@ -115,9 +115,18 @@ end
 function setRFValues()
 	local graphLength = (width / 4 * 3) - 8
 	for index = 1, graphLength do
-		valuesRF[index] = math.random(50)
+		valuesRF[index] = 1
 	end
 end
+
+function updateRFValues()
+	table.insert(valuesRF, 1, math.random(30))
+	table.remove(numbers)
+end
+
+-- function updateStatistics()
+
+-- end
 
 function graph()
 	local oldColour = gpu.getBackground(false)
@@ -134,7 +143,8 @@ function graph()
 			colourSwitch = true
 		end
 
-		gpu.fill(paddingLeft, paddingTop, 1, valuesRF[index], " ")
+		gpu.fill(paddingLeft, paddingTop - valuesRF[index], 1, valuesRF[index], " ")
+
 		paddingLeft = paddingLeft + 1
 
 	end
@@ -145,9 +155,9 @@ function graph()
 end
 
 function main()
+	setRFValues()
 	while true do
 		clearScreen()
-		setRFValues()
 		setFrame()
 		setHeader()
 		setStatistics()
