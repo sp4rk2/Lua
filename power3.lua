@@ -4,10 +4,10 @@ local  gpu = component.gpu
 
 local width, height = gpu.getResolution()
 
-local frameColour = 0xFFFFFF
+local frameColour = 0x819294
 
-local barColour1 = 0x06989A
-local barColour2 = 0x34E2E2
+local barColour1 = 0x8AE234
+local barColour2 = 0x4E9A06
 
 local header = {
 	"Mainframe Power Monitor", 
@@ -20,6 +20,8 @@ local titleColour = 0xFFFFFF
 
 local statisticKeyColour = 0x06989A
 local statisticValueColour = 0x34E2E2
+
+local backgroundColour = 0x002B36
 
 local valuesRF = {}
 
@@ -47,7 +49,7 @@ local graphLength = 0
 
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
-	gpu.setBackground(0x000000, false)
+	gpu.setBackground(backgroundColour, false)
 	gpu.fill(1, 1, width, height, " ")
 	gpu.setBackground(oldColour, false)
 end
@@ -131,7 +133,7 @@ end
 function calculateValues()
 	headerSpace = (width / 4) - 3
 	headerPaddingLeft = ((width / 4) * 3) + 1
-	graphLength = (width / 4 * 3) - 30
+	graphLength = (width / 4 * 3) - 20
 	statisticsPaddingLeft = ((width / 4) * 3) + 2
 	titleSpace = (width / 4) - 3
 	graphPaddingTop = height - 1
@@ -162,8 +164,7 @@ end
 function graph()
 	local oldColour = gpu.getBackground(false)
 
-	gpu.setBackground(0xFFFFFF, false)
-	local paddingLeft = (width / 4 * 3) - 10
+	local paddingLeft = (width / 4 * 3) - 20
 
 	for index = 1, graphLength do
 		if colourSwitch == true then
