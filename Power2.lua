@@ -115,7 +115,7 @@ end
 function setRFValues()
 	local graphLength = (width / 4 * 3) - 8
 	for index = 1, graphLength do
-		valuesRF[index] = 1
+		valuesRF[index] = math.random(50)
 	end
 end
 
@@ -123,10 +123,20 @@ function graph()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = 7
-	local paddingTop = (height / 4) * 3 
+	local paddingTop = (height / 4) * 3
+	local colourSwitch = true
 	for index = 1, tableLength(valuesRF) do
+		if colourSwitch == true then
+			gpu.setBackground(barColour1, false)
+			colourSwitch = false
+		else
+			gpu.setBackground(barColour2, false)
+			colourSwitch = true
+		end
+
 		gpu.fill(paddingLeft, paddingTop, 1, valuesRF[index], " ")
 		paddingLeft = paddingLeft + 1
+
 	end
 
 	gpu.setBackground(oldColour, false)
