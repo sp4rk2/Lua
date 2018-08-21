@@ -26,7 +26,7 @@ local valuesRF = {}
 local cellCount = 90
 local available = component.energy_device.getEnergyStored() * cellCount
 local max = component.energy_device.getMaxEnergyStored() * cellCount
-local updateTime = 2
+local updateTime = 6
 local lowestRF = component.energy_device.getEnergyStored() * cellCount
 local lowestRFTime = 0
 local highestRF = component.energy_device.getEnergyStored() * cellCount
@@ -149,7 +149,7 @@ function updateValues()
 	if available <= lowestRF then
 		lowestRF = component.energy_device.getEnergyStored() * cellCount
 	end
-	percent = round((available / max) * height - 20, 0)
+	percent = round((available / max) * height / 2, 0)
 
 	table.insert(valuesRF, 1, percent)
 	table.remove(valuesRF)
@@ -163,18 +163,20 @@ function graph()
 	local oldColour = gpu.getBackground(false)
 
 	gpu.setBackground(0xFFFFFF, false)
-	local paddingLeft = (width / 4 * 3) - 2
+	local paddingLeft = (width / 4 * 3) - graphLength / 2
 
 	for index = 1, graphLength do
-		-- if colourSwitch == true then
-		gpu.setBackground(barColour1, false)
-		-- 	colourSwitch = false
-		-- else
-		-- 	gpu.setBackground(barColour2, false)
-		-- 	colourSwitch = true
-		-- end
+		if colourSwitch == true then
+			gpu.setBackground(barColour1, false)
+			colourSwitch = false
+		else
+			gpu.setBackground(barColour2, false)
+			colourSwitch = true
+		end
 
-		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[graphLength - index + 1], 1, valuesRF[graphLength - index + 1], " ")
+		local height = valuesRF[graphLength - index + 1]
+
+		gpu.fill(paddingLeft, graphPaddingTop - height, 1, height, " ")
 
 		paddingLeft = paddingLeft - 1
 
