@@ -37,6 +37,10 @@ local colourSwitch = true
 local headerSpace = 0
 local headerPaddingLeft = 0
 
+local statisticsPaddingLeft = 0
+local statisticsPaddingTop = 0
+local titleSpace = 0
+
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0x000000, false)
@@ -93,39 +97,38 @@ function setStatistics()
 	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(titleColour, false)
 
-	local paddingLeft = ((width / 4) * 3) + 2
-	local paddingTop = 8 + tableLength(header)
-	local titleSpace = (width / 4) - 3
-
-	gpu.set(paddingLeft - 1, paddingTop, centerText("Statistics", titleSpace))
-	paddingTop = paddingTop + 2
+	gpu.set(statisticsPaddingLeft - 1, statisticsPaddingTop, centerText("Statistics", titleSpace))
+	statisticsPaddingTop = statisticsPaddingTop + 2
 
 	gpu.setForeground(statisticKeyColour, false)
-	gpu.set(paddingLeft, paddingTop, "Cell Count: ")
-	gpu.set(paddingLeft, paddingTop + 1, "TSLU: ")
-	gpu.set(paddingLeft, paddingTop + 3, "Available: ")
-	gpu.set(paddingLeft, paddingTop + 5, "Lowest: ")
-	gpu.set(paddingLeft, paddingTop + 6, "Lowest Time: ")
-	gpu.set(paddingLeft, paddingTop + 8, "Highest: ")
-	gpu.set(paddingLeft, paddingTop + 9, "Highest Time: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop, "Cell Count: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 1, "TSLU: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 3, "Available: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 5, "Lowest: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 6, "Lowest Time: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 8, "Highest: ")
+	gpu.set(statisticsPaddingLeft, statisticsPaddingTop + 9, "Highest Time: ")
 
 	gpu.setForeground(statisticValueColour, false)
-	gpu.set(width - string.len(tostring(cellCount)) - 3, paddingTop, tostring(cellCount))
-	gpu.set(width - string.len(tostring(updateTime) .. "seconds") - 3, paddingTop + 1, tostring(updateTime) .. "seconds")
-	gpu.set(width - string.len(tostring(available) .. "/" .. tostring(max)) - 3, paddingTop + 3, tostring(available) .. "/" .. tostring(max))
-	gpu.set(width - string.len(tostring(lowestRF) .. "RF") - 3, paddingTop + 5, tostring(lowestRF) .. "RF")
-	gpu.set(width - string.len(tostring(lowestRFTime)) - 3, paddingTop + 6, tostring(lowestRFTime))
-	gpu.set(width - string.len(tostring(highestRF) .. "RF") - 3, paddingTop + 8, tostring(highestRF) .. "RF")
-	gpu.set(width - string.len(tostring(highestRFTime)) - 3, paddingTop + 9, tostring(highestRFTime))
+	gpu.set(width - string.len(tostring(cellCount)) - 3, statisticsPaddingTop, tostring(cellCount))
+	gpu.set(width - string.len(tostring(updateTime) .. "seconds") - 3, statisticsPaddingTop + 1, tostring(updateTime) .. "seconds")
+	gpu.set(width - string.len(tostring(available) .. "/" .. tostring(max)) - 3, statisticsPaddingTop + 3, tostring(available) .. "/" .. tostring(max))
+	gpu.set(width - string.len(tostring(lowestRF) .. "RF") - 3, statisticsPaddingTop + 5, tostring(lowestRF) .. "RF")
+	gpu.set(width - string.len(tostring(lowestRFTime)) - 3, statisticsPaddingTop + 6, tostring(lowestRFTime))
+	gpu.set(width - string.len(tostring(highestRF) .. "RF") - 3, statisticsPaddingTop + 8, tostring(highestRF) .. "RF")
+	gpu.set(width - string.len(tostring(highestRFTime)) - 3, statisticsPaddingTop + 9, tostring(highestRFTime))
 
 	gpu.setForeground(oldColour, false)
 
 end
 
 function calculateValues()
-	local headerSpace = (width / 4) - 3
-	local headerPaddingLeft = ((width / 4) * 3) + 1
-	local graphLength = (width / 4 * 3) - 11
+	headerSpace = (width / 4) - 3
+	headerPaddingLeft = ((width / 4) * 3) + 1
+	graphLength = (width / 4 * 3) - 11
+	statisticsPaddingLeft = ((width / 4) * 3) + 2
+	statisticsPaddingTop = 8 + tableLength(header)
+	titleSpace = (width / 4) - 3
 	for index = 1, graphLength do
 		valuesRF[index] = 1
 	end
