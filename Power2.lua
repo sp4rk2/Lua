@@ -30,6 +30,8 @@ local lowestRFTime = 0
 local highestRF = 0
 local highestRFTime = 0
 
+local colourSwitch = true
+
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0x000000, false)
@@ -113,7 +115,7 @@ function setStatistics()
 end
 
 function setRFValues()
-	local graphLength = (width / 4 * 3) - 8
+	local graphLength = (width / 4 * 3) - 11
 	for index = 1, graphLength do
 		valuesRF[index] = 1
 	end
@@ -131,9 +133,8 @@ end
 function graph()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0xFFFFFF, false)
-	local paddingLeft = (width / 4 * 3) - 1
+	local paddingLeft = (width / 4 * 3) - 2
 	local paddingTop = height - 1
-	local colourSwitch = true
 	for index = 1, tableLength(valuesRF) do
 		if colourSwitch == true then
 			gpu.setBackground(barColour1, false)
@@ -163,7 +164,7 @@ function main()
 		setStatistics()
 		updateRFValues()
 		graph()
-		os.sleep(4)
+		os.sleep(2)
 	end
 end
 
