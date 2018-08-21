@@ -23,11 +23,13 @@ local statisticValueColour = 0x34E2E2
 
 local valuesRF = {}
 
-local cellCount = 0
-local tslu = 0
-local lowestRF = 0
+local cellCount = 90
+local available = component.energy_device.getEnergyStored() * cellCount
+local max = component.energy_device.getMaxEnergyStored() * cellCount
+local updateTime = 2
+local lowestRF = component.energy_device.getEnergyStored() * cellCount
 local lowestRFTime = 0
-local highestRF = 0
+local highestRF = component.energy_device.getEnergyStored() * cellCount
 local highestRFTime = 0
 
 local colourSwitch = true
@@ -50,6 +52,11 @@ function setFrame()
 	--Divider
 	gpu.fill((width / 4) * 3, 1, 1, height, " ")
 	gpu.setBackground(oldColour, false)
+end
+
+function round(num, numDecimalPlaces)
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
 end
 
 function centerText(text, space)
@@ -95,19 +102,19 @@ function setStatistics()
 	gpu.setForeground(statisticKeyColour, false)
 	gpu.set(paddingLeft, paddingTop, "Cell Count: ")
 	gpu.set(paddingLeft, paddingTop + 1, "TSLU: ")
-	gpu.set(paddingLeft, paddingTop + 3, "Available RF: ")
-	gpu.set(paddingLeft, paddingTop + 5, "Lowest RF: ")
-	gpu.set(paddingLeft, paddingTop + 6, "Lowest RF Time: ")
-	gpu.set(paddingLeft, paddingTop + 8, "Highest RF: ")
-	gpu.set(paddingLeft, paddingTop + 9, "Highest RF Time: ")
+	gpu.set(paddingLeft, paddingTop + 3, "Available: ")
+	gpu.set(paddingLeft, paddingTop + 5, "Lowest: ")
+	gpu.set(paddingLeft, paddingTop + 6, "Lowest Time: ")
+	gpu.set(paddingLeft, paddingTop + 8, "Highest: ")
+	gpu.set(paddingLeft, paddingTop + 9, "Highest Time: ")
 
 	gpu.setForeground(statisticValueColour, false)
 	gpu.set(width - string.len(tostring(cellCount)) - 3, paddingTop, tostring(cellCount))
-	gpu.set(width - string.len(tostring(tslu)) - 3, paddingTop + 1, tostring(tslu))
-	gpu.set(width - string.len(tostring(0)) - 3, paddingTop + 3, tostring(0))
-	gpu.set(width - string.len(tostring(lowestRF)) - 3, paddingTop + 5, tostring(lowestRF))
+	gpu.set(width - string.len(tostring(updateTime) .. "seconds") - 3, paddingTop + 1, tostring(updateTime) .. "seconds")
+	gpu.set(width - string.len(tostring(available) .. "/" .. tostring(max)) - 3, paddingTop + 3, tostring(available) .. "/" .. tostring(max))
+	gpu.set(width - string.len(tostring(lowestRF) .. "RF") - 3, paddingTop + 5, tostring(lowestRF) .. "RF")
 	gpu.set(width - string.len(tostring(lowestRFTime)) - 3, paddingTop + 6, tostring(lowestRFTime))
-	gpu.set(width - string.len(tostring(highestRF)) - 3, paddingTop + 8, tostring(highestRF))
+	gpu.set(width - string.len(tostring(highestRF) .. "RF") - 3, paddingTop + 8, tostring(highestRF) .. "RF")
 	gpu.set(width - string.len(tostring(highestRFTime)) - 3, paddingTop + 9, tostring(highestRFTime))
 
 	gpu.setForeground(oldColour, false)
@@ -122,7 +129,16 @@ function setRFValues()
 end
 
 function updateRFValues()
-	table.insert(valuesRF, 1, math.random(30))
+	available = component.energy_device.getEnergyStored() * cellCount
+
+	if available >= highestRF then
+		highestRF = component.energy_device.getEnergyStored() * cellCount
+	if available <= lowestRF then
+		lowestRF = component.energy_device.getEnergyStored() * cellCount
+
+	percent = round((available / max) * height - 20, 0)
+
+	table.insert(valuesRF, 1, percent)
 	table.remove(valuesRF)
 end
 
@@ -164,9 +180,10 @@ function main()
 		setStatistics()
 		updateRFValues()
 		graph()
-		os.sleep(2)
+		os.sleep(updateTime)
 	end
 end
 
 
 main()
+
