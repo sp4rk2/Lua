@@ -163,7 +163,7 @@ function graph()
 	local oldColour = gpu.getBackground(false)
 
 	gpu.setBackground(0xFFFFFF, false)
-	local paddingLeft = (width / 4 * 3) - graphLength / 2
+	local paddingLeft = (width / 4 * 3) - graphLength + graphLength / 2
 
 	for index = 1, graphLength do
 		if colourSwitch == true then
@@ -192,10 +192,10 @@ function main()
 	while true do
 		updateValues()
 		clearScreen()
-		graph()
 		setFrame()
 		setHeader()
 		setStatistics()
+		graph()
 		os.sleep(updateTime)
 	end
 end
