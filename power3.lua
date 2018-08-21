@@ -131,7 +131,7 @@ end
 function calculateValues()
 	headerSpace = (width / 4) - 3
 	headerPaddingLeft = ((width / 4) * 3) + 1
-	graphLength = (width / 4 * 3) - 11
+	graphLength = (width / 4 * 3) - 30
 	statisticsPaddingLeft = ((width / 4) * 3) + 2
 	titleSpace = (width / 4) - 3
 	graphPaddingTop = height - 1
@@ -165,16 +165,16 @@ function graph()
 	gpu.setBackground(0xFFFFFF, false)
 	local paddingLeft = (width / 4 * 3) - 2
 
-	for index = 1, graphLength do
-		if colourSwitch == true then
-			gpu.setBackground(barColour1, false)
-			colourSwitch = false
-		else
-			gpu.setBackground(barColour2, false)
-			colourSwitch = true
-		end
+	for index = 3, graphLength + 3 do
+		-- if colourSwitch == true then
+		gpu.setBackground(barColour1, false)
+		-- 	colourSwitch = false
+		-- else
+		-- 	gpu.setBackground(barColour2, false)
+		-- 	colourSwitch = true
+		-- end
 
-		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[graphLength - index + 1], 1, valuesRF[graphLength - index + 1], " ")
+		gpu.fill(paddingLeft, graphPaddingTop - valuesRF[graphLength - index], 1, valuesRF[graphLength - index], " ")
 
 		paddingLeft = paddingLeft - 1
 
@@ -190,10 +190,10 @@ function main()
 	while true do
 		updateValues()
 		clearScreen()
+		graph()
 		setFrame()
 		setHeader()
 		setStatistics()
-		graph()
 		os.sleep(updateTime)
 	end
 end
