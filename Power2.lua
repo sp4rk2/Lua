@@ -163,7 +163,7 @@ function main()
 		setStatistics()
 		updateRFValues()
 		graph()
-		os.sleep(3)
+		os.sleep(4)
 	end
 end
 
