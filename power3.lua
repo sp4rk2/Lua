@@ -34,6 +34,9 @@ local highestRFTime = 0
 
 local colourSwitch = true
 
+local headerSpace = 0
+local headerPaddingLeft = 0
+
 function clearScreen()
 	local oldColour = gpu.getBackground(false)
 	gpu.setBackground(0x000000, false)
@@ -80,10 +83,8 @@ function setHeader()
 	local oldColour = gpu.getForeground(false)
 	gpu.setForeground(headerColour, false)
 
-	local headerSpace = (width / 4) - 3
-	local paddingLeft = ((width / 4) * 3) + 1
 	for index=1, tableLength(header) do
-		gpu.set(paddingLeft, index + 3, centerText(header[index], headerSpace))
+		gpu.set(headerPaddingLeft, index + 3, centerText(header[index], headerSpace))
 	end
 	gpu.setForeground(oldColour, false)
 end
@@ -121,14 +122,16 @@ function setStatistics()
 
 end
 
-function setRFValues()
+function calculateValues()
+	local headerSpace = (width / 4) - 3
+	local headerPaddingLeft = ((width / 4) * 3) + 1
 	local graphLength = (width / 4 * 3) - 11
 	for index = 1, graphLength do
 		valuesRF[index] = 1
 	end
 end
 
-function updateRFValues()
+function updateValues()
 	available = component.energy_device.getEnergyStored() * cellCount
 
 	if available >= highestRF then
@@ -173,9 +176,9 @@ function graph()
 end
 
 function main()
-	setRFValues()
+	calculateValues()
 	while true do
-		updateRFValues()
+		updateValues()
 		clearScreen()
 		setFrame()
 		setHeader()
