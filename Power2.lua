@@ -47,7 +47,7 @@ function header()
 
 	local headerSpace = ((width / 4) * 3) - 3
 
-	gpu.set(3, ((width / 4) * 3) + 1, centerText(title[1], headerSpace))
+	gpu.set(((width / 4) * 3) + 1, 3, centerText(title[1], headerSpace))
 
 	gpu.setForeground(oldColour, false)
 
